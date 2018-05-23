@@ -87,11 +87,13 @@ app.asar
 
 创建子组件时，将它们放置在一个使用其父组件名称的新文件夹中。
 
+```bash
 src/renderer/components
 ├─ ParentA
 │ ├─ ChildA.vue
 │ └─ ChildB.vue
 └─ ParentA.vue
+```
 
 ## vue 路由
 
