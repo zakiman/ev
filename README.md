@@ -38,25 +38,19 @@ my-project
 ├─ src
 │ ├─ main
 │ │ ├─ index.dev.js
-│ │ └─ index.js
+│ │ └─ index.js       electron主进程
 │ ├─ renderer
-│ │ ├─ components/
-│ │ ├─ router/
-│ │ ├─ store/
-│ │ ├─ App.vue
-│ │ └─ main.js
+│ │ ├─ assets/        图片、字体等
+│ │ ├─ components/    公用组件
+│ │ ├─ router/        vue-router
+│ │ ├─ store/         vuex
+│ │ ├─ styles/        css存放处
+│ │ ├─ utils/         js存放处
+│ │ ├─ views/         视图组件
+│ │ ├─ App.vue        vue入口
+│ │ └─ main.js        vue入口
 │ └─ index.ejs
 ├─ static/
-├─ test
-│ ├─ e2e
-│ │ ├─ specs/
-│ │ ├─ index.js
-│ │ └─ utils.js
-│ ├─ unit
-│ │ ├─ specs/
-│ │ ├─ index.js
-│ │ └─ karma.config.js
-│ └─ .eslintrc
 ├─ .babelrc
 ├─ .eslintignore
 ├─ .eslintrc.js
@@ -131,3 +125,7 @@ loaders: {
 # 脚手架说明
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html)
+
+# todolist
+- [ ] 如何编译sqlite3，who can help me
+- [ ] 路由跳转如何显得更原生

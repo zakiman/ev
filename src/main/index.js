@@ -1,34 +1,60 @@
-import { app, BrowserWindow } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  Menu,
+  Tray
+} from 'electron'
+
+const path = require('path')
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
-const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
+let win, tray
+const winURL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:9080`
+  : `file://${__dirname}/index.html`
 
-function createWindow () {
+function createWindow() {
   // Open the Vue.js devtools
   if (process.env.NODE_ENV === 'development') {
     BrowserWindow.addDevToolsExtension('C:\\Users\\issuser\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\nhdogjmejiglipccpnnnanhbledajbpd\\4.1.4_0')
   }
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({
-    width: 960,
-    height: 660,
+  // 窗口初始化
+  win = new BrowserWindow({
+    width: 350,
+    height: 350,
+    minWidth: 350,
+    minHeight: 350,
     frame: false
   })
+  win.loadURL(winURL)
+  win.on('closed', () => {
+    win = null
+  })
 
-  mainWindow.loadURL(winURL)
+  // 托盘图标及图标右键菜单
+  tray = new Tray(path.join(__dirname, 'app.ico'))
+  const contextMenu = Menu.buildFromTemplate([{
+    label: '退出',
+    click: () => {
+      // 因为程序设定关闭为最小化，所以调用两次关闭，防止最大化时一次不能关闭的情况
+      app.quit()
+      app.quit()
+    }
+  }])
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
+  tray.setToolTip('龙信')
+  tray.setContextMenu(contextMenu)
+
+  tray.on('click', () => {
+    win.show()
+    win.setSkipTaskbar(false)
   })
 }
 
@@ -41,7 +67,7 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  if (mainWindow === null) {
+  if (win === null) {
     createWindow()
   }
 })

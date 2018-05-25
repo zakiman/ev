@@ -1,17 +1,27 @@
 import Vue from 'vue'
-import axios from 'axios'
+
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 import App from './App'
 import router from './router'
 import store from './store'
+// import DB from '@/db.js'
+// DB.initDb()
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
+
+Vue.use(ElementUI, {
+  locale
+})
+
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
-  components: { App },
+  components: {
+    App
+  },
   router,
   store,
   template: '<App/>'
