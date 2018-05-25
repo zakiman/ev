@@ -19,7 +19,7 @@ npm run build
 
 若上一项检查完成，我们可以继续设置所需的构建工具。使用 windows-build-tools 来为我们完成大部分烦人的工作。全局安装此工具将依次设置 Visual C++ 软件包、Python 等等。
 
-到现在为止，所有工具都应该成功安装了，如果没有，那么你就会需要安装一个干净的 Visual Studio。请注意，这些并不是 electron-vue 自身的问题 (Windows 有时候可能会很难用)。
+到现在为止，所有工具都应该成功安装了，如果没有，那么你就会需要安装一个干净的 Visual Studio。请注意，这些并不是 electron-vue 自身的问题 (Windows 有时候可能会很难用，vs2015下载安装，创建c++项目安装依赖，用了两天。。。。。。)。
 
 # 项目结构
 
@@ -36,19 +36,19 @@ my-project
 │ └─ web/
 ├─ node_modules/
 ├─ src
-│ ├─ main
+│ ├─ main             electron主进程
 │ │ ├─ index.dev.js
-│ │ └─ index.js       electron主进程
+│ │ └─ index.js
 │ ├─ renderer
-│ │ ├─ assets/        图片、字体等
-│ │ ├─ components/    公用组件
-│ │ ├─ router/        vue-router
-│ │ ├─ store/         vuex
-│ │ ├─ styles/        css存放处
-│ │ ├─ utils/         js存放处
-│ │ ├─ views/         视图组件
-│ │ ├─ App.vue        vue入口
-│ │ └─ main.js        vue入口
+│ │ ├─ assets/        存放图片、字体等静态资源
+│ │ ├─ components/    存放公用组件
+│ │ ├─ router/
+│ │ ├─ store/
+│ │ ├─ styles/        .css
+│ │ ├─ utils/         .js
+│ │ ├─ views/         存放视图
+│ │ ├─ App.vue
+│ │ └─ main.js
 │ └─ index.ejs
 ├─ static/
 ├─ .babelrc
@@ -75,25 +75,9 @@ app.asar
 
 # 开发规范
 
-## vue 组件
-
-组件存放在 src/renderer/components 里。
-
-创建子组件时，将它们放置在一个使用其父组件名称的新文件夹中。
-
-```bash
-src/renderer/components
-├─ ParentA
-│ ├─ ChildA.vue
-│ └─ ChildB.vue
-└─ ParentA.vue
-```
-
 ## vue 路由
 
-路由存放在 src/renderer/router 里。
-
-不要使用 HTML5 历史模式。 此模式严格用于通过 http 协议提供文件，并且不能正常使用 file 协议，但是 electron 在产品构建中使用此协议提供文件。默认的 hash 模式正是我们所需要的。
+路由存放在 src/renderer/router 里。不要使用 HTML5 历史模式。 此模式严格用于通过 http 协议提供文件，并且不能正常使用 file 协议，但是 electron 在产品构建中使用此协议提供文件。默认的 hash 模式正是我们所需要的。
 
 ## vuex 模块
 
