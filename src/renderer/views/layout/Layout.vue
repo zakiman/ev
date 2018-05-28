@@ -1,6 +1,5 @@
 <template>
   <div class="app_wrap">
-    <el-button @click="logout">out</el-button>
     <navbar class="header"></navbar>
     <div class="body">
       <sidebar class="aside"></sidebar>
@@ -11,7 +10,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
-import { resizeWin, hideWin } from '@/utils/window'
+import { resizeWin } from '@/utils/window'
 
 export default {
   name: 'layout',
@@ -22,8 +21,6 @@ export default {
   },
   methods: {
     logout() {
-      hideWin()
-      this.$router.push({ path: '/login' })
     }
   },
   created() {

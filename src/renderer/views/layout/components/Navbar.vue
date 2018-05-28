@@ -5,7 +5,7 @@
       clearable
       class="search_wrap"
       prefix-icon="el-icon-search"></el-input>
-    {{title}}
+    <span class="cannot_select">{{title}}</span>
     <toolbar></toolbar>
   </header>
 </template>

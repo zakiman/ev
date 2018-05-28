@@ -7,8 +7,12 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout'
 
 const Chat = r => require.ensure([], () => r(require('@/views/chat/index')), 'group-chat')
+
 const AddressBook = r => require.ensure([], () => r(require('@/views/addressBook/index')), 'group-addressBook')
+
 const Workbench = r => require.ensure([], () => r(require('@/views/workbench/index')), 'group-workbench')
+
+const Settings = r => require.ensure([], () => r(require('@/views/settings/index')), 'group-settings')
 
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index') },
@@ -16,7 +20,7 @@ export const constantRouterMap = [
 
   {
     path: '/',
-    redirect: '/chat/index'
+    redirect: '/login'
   },
 
   {
@@ -56,6 +60,12 @@ export const constantRouterMap = [
         meta: { title: '工作台' }
       }
     ]
+  },
+
+  {
+    name: 'settings',
+    path: '/settings',
+    component: Settings
   },
 
   { path: '*', redirect: '/404', hidden: true }

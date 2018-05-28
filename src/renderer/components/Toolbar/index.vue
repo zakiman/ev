@@ -65,7 +65,7 @@ export default {
     line-height: 16px;
     margin: 22px 0;
     font-size: 20px;
-    color: #eaeaea;
+    color: #999;
     & + i {
       margin-left: 30px;
     }

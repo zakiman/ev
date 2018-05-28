@@ -2,7 +2,8 @@ import {
   app,
   BrowserWindow,
   Menu,
-  Tray
+  Tray,
+  ipcMain as ipc
 } from 'electron'
 
 const path = require('path')
@@ -15,10 +16,9 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let win, tray
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+let mainWin, settingWin, tray
+const mainURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
+const settingURL = process.env.NODE_ENV === 'development' ? 'http://localhost:9080/#/settings' : `file://${__dirname}/index.html#settings`
 
 function createWindow() {
   // Open the Vue.js devtools
@@ -26,16 +26,19 @@ function createWindow() {
     BrowserWindow.addDevToolsExtension('C:\\Users\\issuser\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\nhdogjmejiglipccpnnnanhbledajbpd\\4.1.4_0')
   }
   // 窗口初始化
-  win = new BrowserWindow({
+  mainWin = new BrowserWindow({
     width: 350,
     height: 350,
     minWidth: 350,
     minHeight: 350,
+    webPreferences: {
+      webSecurity: false
+    },
     frame: false
   })
-  win.loadURL(winURL)
-  win.on('closed', () => {
-    win = null
+  mainWin.loadURL(mainURL)
+  mainWin.on('closed', () => {
+    mainWin = null
   })
 
   // 托盘图标及图标右键菜单
@@ -53,8 +56,8 @@ function createWindow() {
   tray.setContextMenu(contextMenu)
 
   tray.on('click', () => {
-    win.show()
-    win.setSkipTaskbar(false)
+    mainWin.show()
+    mainWin.setSkipTaskbar(false)
   })
 }
 
@@ -67,9 +70,26 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  if (win === null) {
+  if (mainWin === null) {
     createWindow()
   }
+})
+
+// 设置
+ipc.on('settings', (event, arg) => {
+  settingWin = new BrowserWindow({
+    width: 478,
+    height: 601,
+    webPreferences: {
+      webSecurity: false
+    },
+    frame: false
+  })
+  settingWin.loadURL(settingURL)
+
+  settingWin.on('close', function () {
+    settingWin = null
+  })
 })
 
 /**

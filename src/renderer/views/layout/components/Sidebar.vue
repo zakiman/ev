@@ -1,5 +1,5 @@
 <template>
-  <aside class="aside">
+  <aside>
     <nav class="nav_list">
       <router-link v-for="(item, index) in nav" :key="index"
         :title="item.title"
@@ -12,9 +12,19 @@
     <ul class="tools_list">
       <li class="iconfont icon-addition"></li>
       <li class="iconfont icon-search"></li>
-      <li class="iconfont icon-setup"></li>
+      <li>
+        <el-popover
+          placement="top-start"
+          trigger="click">
+          <ul class="setup">
+            <li @click="setting">设置</li>
+            <li @click="logout">退出登陆</li>
+          </ul>
+          <i class="iconfont icon-setup" slot="reference"></i>
+        </el-popover>
+      </li>
       <li class="avatar">
-        <img src=" " alt="">
+        <img class="cannot_select" src=" " alt="">
       </li>
     </ul>
   </aside>
@@ -22,6 +32,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { hideWin } from '@/utils/window'
+import { ipcRenderer } from 'electron'
 
 export default {
   data() {
@@ -48,16 +60,26 @@ export default {
   methods: {
     clickNav(title) {
       this.$store.dispatch('setTitle', title)
+    },
+    setting() {
+      ipcRenderer.send('settings')
+    },
+    logout() {
+      hideWin()
+      this.$router.push({ path: '/login' })
     }
   }
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scopd>
+<style rel="stylesheet/scss" lang="scss" scoped>
 $classNav: message, addressbook, computer;
 
 .aside {
   text-align: center;
+  .el-popover {
+    padding: 0;
+  }
   .iconfont {
     display: block;
     font-size: 30px;
@@ -92,6 +114,18 @@ $classNav: message, addressbook, computer;
         background-color: #edf2f8;
         border-radius: 10px;
       }
+    }
+  }
+}
+
+// 设置
+.setup {
+  text-align: center;
+  li {
+    cursor: pointer;
+    line-height: 35px;
+    &:first-child {
+      border-bottom: 2px solid $bdColor;
     }
   }
 }

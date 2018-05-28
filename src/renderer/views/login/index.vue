@@ -77,7 +77,7 @@ export default {
         if (valid) {
           this.loading = true
           hideWin()
-          this.$router.push({ path: '/' })
+          this.$router.push({ path: '/chat/index' })
         } else {
           this.loading = false
         }
